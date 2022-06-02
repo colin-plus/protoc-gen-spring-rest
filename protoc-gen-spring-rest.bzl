@@ -72,7 +72,7 @@ _grpc_spring_rest_library = rule(
     attrs = {
         "srcs": attr.label_list(mandatory = True, allow_empty = False, providers = [ProtoInfo]),
         "deps": attr.label_list(mandatory = True, allow_empty = False, providers = [JavaInfo]),
-        "_runtime": attr.label_list(default = []),
+        "_runtime": attr.label_list(default = ["//protoc-gen-spring-rest:runtime"]),
         "_plugin": attr.label(default = Label("//protoc-gen-spring-rest")),
         "_toolchain": attr.label(default = Label("//protoc-gen-spring-rest:grpc_spring_rest_library_toolchain")),
     },
