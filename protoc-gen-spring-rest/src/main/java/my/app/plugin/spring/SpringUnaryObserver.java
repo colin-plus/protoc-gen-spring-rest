@@ -6,8 +6,6 @@ import io.grpc.stub.StreamObserver;
 import org.springframework.web.context.request.async.DeferredResult;
 
 public class SpringUnaryObserver<V extends Message> implements StreamObserver<V> {
-  private static final String ERROR_RESPONSE =
-      "{\"code\":\"error\",\"message\":\"服务器开小差了，稍后再试吧~\"}";
   private final DeferredResult<String> result;
 
   public SpringUnaryObserver(DeferredResult<String> result) {
@@ -28,7 +26,7 @@ public class SpringUnaryObserver<V extends Message> implements StreamObserver<V>
   @Override
   public void onError(Throwable t) {
     try {
-      result.setResult(ERROR_RESPONSE);
+      result.setResult(ErrorHandler.handle(t));
     } catch (Exception ignore) {
     }
   }

@@ -35,6 +35,7 @@ java_binary(
 java_library(
     name = "runtime",
     srcs = [
+        "src/main/java/my/app/plugin/spring/ErrorHandler.java",
         "src/main/java/my/app/plugin/spring/RequestBuilder.java",
         "src/main/java/my/app/plugin/spring/SpringUnaryObserver.java",
     ],
