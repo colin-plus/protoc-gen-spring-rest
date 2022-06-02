@@ -1,0 +1,49 @@
+load("//:protoc-gen-spring-rest.bzl", "grpc_spring_rest_library_toolchain")
+
+grpc_spring_rest_library_toolchain(
+    name = "grpc_spring_rest_library_toolchain",
+    visibility = ["//visibility:public"],
+)
+
+# spring-rest generator
+java_library(
+    name = "generator",
+    srcs = [
+        "src/main/java/my/app/plugin/spring/CodeGenerator.java",
+        "src/main/java/my/app/plugin/spring/Main.java",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//tools/java:lombok",
+        "@maven//:com_github_spullara_mustache_java_compiler",
+        "@maven//:com_google_api_grpc_proto_google_common_protos",
+        "@maven//:com_google_guava_guava",
+        "@maven//:com_google_protobuf_protobuf_java",
+    ],
+)
+
+# spring-rest plugin
+java_binary(
+    name = "protoc-gen-spring-rest",
+    main_class = "my.app.plugin.spring.Main",
+    resources = ["src/main/resources/spring-rest.tpl"],
+    visibility = ["//visibility:public"],
+    runtime_deps = [":generator"],
+)
+
+# spring-rest runtime
+java_library(
+    name = "runtime",
+    srcs = [
+        "src/main/java/my/app/plugin/spring/RequestBuilder.java",
+        "src/main/java/my/app/plugin/spring/SpringUnaryObserver.java",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@com_google_protobuf//java/util",
+        "@io_grpc_grpc_java//stub",
+        "@maven//:com_google_protobuf_protobuf_java",
+        "@maven//:javax_servlet_javax_servlet_api",
+        "@maven//:org_springframework_spring_web",
+    ],
+)
