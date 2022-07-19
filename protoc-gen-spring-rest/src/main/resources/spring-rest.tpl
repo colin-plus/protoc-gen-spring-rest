@@ -1,6 +1,6 @@
 // DON'T EDIT THIS FILE!
 
-// Generate by "protoc-gen-spring",
+// Generate by: https://github.com/colin-plus/protoc-gen-spring-rest
 // Source file: {{protoName}}.
 
 package {{javaPackage}};
