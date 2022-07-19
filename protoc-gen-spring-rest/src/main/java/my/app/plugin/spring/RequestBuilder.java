@@ -16,7 +16,7 @@ public class RequestBuilder {
       Message.Builder builder, HttpServletRequest request, String body)
       throws InvalidProtocolBufferException {
     if (body != null && !Objects.equals(body.trim(), "")) {
-      JsonFormat.parser().merge(body, builder);
+      JsonFormat.parser().ignoringUnknownFields().merge(body, builder);
     }
 
     Map<String, String> parameterMap =
