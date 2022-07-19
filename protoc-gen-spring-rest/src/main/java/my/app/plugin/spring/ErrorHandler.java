@@ -1,9 +1,9 @@
 package my.app.plugin.spring;
 
 public class ErrorHandler {
-  private static GrpcSprintErrorHandler errorHandler = GrpcSprintErrorHandler.DEFAULT;
+  private static GrpcSpringErrorHandler errorHandler = GrpcSpringErrorHandler.DEFAULT;
 
-  public static void setErrorHandler(GrpcSprintErrorHandler errorHandler) {
+  public static void setErrorHandler(GrpcSpringErrorHandler errorHandler) {
     ErrorHandler.errorHandler = errorHandler;
   }
 
@@ -11,9 +11,9 @@ public class ErrorHandler {
     return errorHandler.handle(t);
   }
 
-  public interface GrpcSprintErrorHandler {
+  public interface GrpcSpringErrorHandler {
     String handle(Throwable t);
 
-    GrpcSprintErrorHandler DEFAULT = t -> "{\"code\":\"error\",\"message\":\"服务器开小差了，稍后再试吧~\"}";
+    GrpcSpringErrorHandler DEFAULT = t -> "{\"code\":\"error\",\"message\":\"服务器开小差了，稍后再试吧~\"}";
   }
 }
