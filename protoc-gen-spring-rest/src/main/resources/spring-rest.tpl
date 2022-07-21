@@ -8,17 +8,15 @@ package {{javaPackage}};
 import my.app.plugin.spring.RequestBuilder;
 import my.app.plugin.spring.SpringUnaryObserver;
 
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.http.MediaType;{{#hasBody}}
+import org.springframework.web.bind.annotation.RequestBody;{{/hasBody}}
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import static org.springframework.web.bind.annotation.RequestMethod.*;
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController("{{javaPackage}}.{{className}}")
 public class {{className}} {
@@ -29,8 +27,15 @@ public class {{className}} {
     }
     {{#methodList}}
 
-    @RequestMapping(method = {{method}}, value = "{{url}}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-    public DeferredResult<String> {{name}}_{{method}}_{{index}}(HttpServletRequest request, HttpServletResponse response{{#hasBody}}, @RequestBody String body{{/hasBody}}) {
+    @RequestMapping(
+        method = RequestMethod.{{method}},
+        value = "{{url}}",
+        consumes = MediaType.APPLICATION_JSON_VALUE,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    public DeferredResult<String> {{name}}_{{method}}_{{index}}(
+            HttpServletRequest request,
+            HttpServletResponse response{{#hasBody}},
+            @RequestBody String body{{/hasBody}}) {
         DeferredResult<String> result = new DeferredResult<>(60 * 1000L);
         SpringUnaryObserver<{{responseType}}> observer = new SpringUnaryObserver<>(result);
         try {
