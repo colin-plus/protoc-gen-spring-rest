@@ -8,7 +8,7 @@ package {{javaPackage}};
 import my.app.plugin.spring.RequestBuilder;
 import my.app.plugin.spring.SpringUnaryObserver;
 
-{{#hasBody}}import org.springframework.web.bind.annotation.RequestBody;{{/hasBody}}
+{{#needImportRequestBody}}import org.springframework.web.bind.annotation.RequestBody;{{/needImportRequestBody}}
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;

@@ -144,6 +144,7 @@ public class CodeGenerator {
         .className(className)
         .grpcStub(grpcStub)
         .methodList(list)
+        .needImportRequestBody(list.stream().anyMatch(ControllerMethod::isHasBody))
         .build();
   }
 
@@ -168,7 +169,7 @@ public class CodeGenerator {
 
       String javaMethod = serviceMethod.getMethodDescriptorProto().getName();
       String httpMethod = rule.getPatternCase().toString();
-      boolean hasBody = "*".equals(rule.getBody().trim());
+      boolean hasBody = !Strings.isNullOrEmpty(rule.getBody());
       String requestType = className(input);
       String responseType = className(output);
 
@@ -265,6 +266,7 @@ public class CodeGenerator {
     private String className;
     private String grpcStub;
     private List<ControllerMethod> methodList;
+    private boolean needImportRequestBody;
   }
 
   @Data
