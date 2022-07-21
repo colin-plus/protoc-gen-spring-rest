@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
-@RestController
+@RestController("{{javaPackage}}.{{className}}")
 public class {{className}} {
     private final {{grpcStub}} stub;
 
