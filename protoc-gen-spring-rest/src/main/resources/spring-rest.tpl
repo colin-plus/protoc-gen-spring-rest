@@ -17,6 +17,8 @@ import org.springframework.web.context.request.async.DeferredResult;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 @RestController("{{javaPackage}}.{{className}}")
 public class {{className}} {
     private final {{grpcStub}} stub;
@@ -26,7 +28,11 @@ public class {{className}} {
     }
     {{#methodList}}
 
-    @RequestMapping(method = RequestMethod.{{method}}, value = "{{url}}")
+    @RequestMapping(
+        method = RequestMethod.{{method}},
+        value = "{{url}}",
+        produces = APPLICATION_JSON_VALUE,
+        consumes = APPLICATION_JSON_VALUE)
     public DeferredResult<String> {{name}}_{{method}}_{{index}}(HttpServletRequest request, HttpServletResponse response{{#hasBody}}, @RequestBody String body{{/hasBody}}) {
         DeferredResult<String> result = new DeferredResult<>(60 * 1000L);
         SpringUnaryObserver<{{responseType}}> observer = new SpringUnaryObserver<>(result);
